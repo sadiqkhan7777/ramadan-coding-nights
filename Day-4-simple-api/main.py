@@ -3,24 +3,20 @@ import random
 
 app = FastAPI()
 
-# we will build two simple get endpoints
-# side_hustles
-# money_quotes
-
-side_hustles = [ 
-
-"Freelancing - Start offering your skills online!", 
-"Dropshipping - Sell without handling inventory!", 
-"Stock Market - Invest and watch your money grow!", 
-"Affiliate Marketing - Earn by promoting products!", 
-"Crypto Trading - Buy and sell digital assets!", 
-"Online Courses - Share your knowledge and earn!", 
-"Print-on-Demand Sell custom-designed products!",
-"Blogging - Create content and earn through ads and sponsorships!", 
-"YouTube Channel - Monetize videos through ads and sponsorships!", 
-"Social Media Management - Manage accounts for brands and influencers!", 
-"App Development - Create mobile or web applications for businesses!",
+side_hustles = [
+    "Freelancing - Start offering your skills online!",
+    "Dropshipping - Sell without handling inventory!",
+    "Stock Market - Invest and watch your money grow!",
+    "Affiliate Marketing - Earn by promoting products!",
+    "Crypto Trading - Buy and sell digital assets!",
+    "Online Courses - Share your knowledge and earn!",
+    "Print-on-Demand - Sell custom-designed products!",
+    "Blogging - Create content and earn through ads and sponsorships!",
+    "YouTube Channel - Monetize videos through ads and sponsorships!",
+    "Social Media Management - Manage accounts for brands and influencers!",
+    "App Development - Create mobile or web applications for businesses!",
 ]
+
 
 money_quotes = [
     "The way to get started is to quit talking and begin doing. – Walt Disney",
@@ -34,26 +30,20 @@ money_quotes = [
     "Money often costs too much. – Ralph Waldo Emerson",
     "Never depend on a single income. Make an investment to create a second source. – Warren Buffett",
     "It’s not about having lots of money. It’s about knowing how to manage it. – Anonymous",
-    "Rich people have small TVs and big libraries, and poor people have small libraries and big TVs. – Unknown",
+    "Rich people have small TVs and big libraries, and poor people have small libraries and big TVs. – Zig Ziglar",
     "Being rich is having money; being wealthy is having time. – Margaret Bonnano",
     "A wise person should have money in their head, but not in their heart. – Jonathan Swift",
-    "Money grows on the tree of persistence. – Japanese Proverb"
+    "Money grows on the tree of persistence. – Japanese Proverb",
 ]
 
 
-
 @app.get("/side_hustles")
-def get_side_hustles(apikey: str):
-   """Returns a random side hustle idea"""
-   if apikey != "1234567890":
-      return {"error": "Invalid API key"}
-   return {"side_hustle": random.choice(side_hustles)}
+def get_side_hustles():
+    """Returns a random side hustle idea"""
+    return {"side_hustle": random.choice(side_hustles)}
+
 
 @app.get("/money_quotes")
-def get_money_quotes(apikey: str):
-   """Returns a random money quote"""
-   if apikey != "1234567890":
-      return {"error": "Invalid API key"}
-   return {"money_quote": random.choice(money_quotes)}
-
-
+def get_money_quotes():
+    """Returns a random money quote"""
+    return {"money_quote": random.choice(money_quotes)}
