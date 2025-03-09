@@ -1,57 +1,72 @@
 import streamlit as st # For creating web interface
-import pandas as pd # for data manipulation
-import datetime # for handling dates
-import csv  # for reading and writing csv files
-import os   # for file operations
+import pandas as pd # For data manipulation
+import datetime # For handling dates
+import csv # For reading and writing CSV file
+import os # For file operations
 
 # Define the file name for storing mood data
 MOOD_FILE = "mood_log.csv"
 
-# function to read mood data from a CSV file
+# Function to read mood data from the CSV file
 def load_mood_data():
     # Check if the file exists
     if not os.path.exists(MOOD_FILE):
-        # if no files, create empty Dataframe and column
+        # If no file, create empty DataFrame with columns
         return pd.DataFrame(columns=["Date", "Mood"])
-    # Read and Return existing mood data
+    # Read and return existing mood data
     return pd.read_csv(MOOD_FILE)
 
-# function to add new mood entry to the CSV file
+# Function to add new mood entry to CSV file
 def save_mood_data(date, mood):
     # Open file in append mode
     with open(MOOD_FILE, "a") as file:
 
         # Create CSV writer
         writer = csv.writer(file)
-        
-        # 
+
+        # Add new mood entry
         writer.writerow([date, mood])
 
-st.title("Mood Tracker by Sadiq")
+# Streamlit app title
+st.title("Mood Tracker")
 
+# Get today's date
 today = datetime.date.today()
 
+# Create subheader for mood input
 st.subheader("How are your feeling today?")
 
-mood = st.selectbox("Select Your Mood", ["Happy", "Sad", "Neutral", "Angry"])
+# Create dropdown for mood selection
+mood = st.selectbox("Select your mood", ["Happy", "Sad", "Angry", "Neutral"])
 
+# Create button to save mood
 if st.button("Log Mood"):
-
+    
+    # Save mood when button is clicked
     save_mood_data(today, mood)
 
+    # Show success message
     st.success("Mood Logged Successfully!")
 
-data = load_mood_data() 
+# Load existing mood data
+data = load_mood_data()
 
+# If there is data to display
 if not data.empty:
 
+    # Create section for Visualization
     st.subheader("Mood Trends Over Time")
-    
+
+    # Convert date stings to datetime Objects
     data["Date"] = pd.to_datetime(data["Date"])
 
+    # Count frequency of each mood
     mood_counts = data.groupby("Mood").count()["Date"]
 
+    # Display bar chart of mood frequencies
     st.bar_chart(mood_counts)
 
-# Build with love by Sadiq khan
-st.write("Build with ❤ by [Sadiq khan](https://github.com/sadiqkhan7777)")
+    # Build with love by Sadiq Khan
+    st.write("Build with ❤️ by [Sadiq Khan](https://github.com/sadiqkhan7777/ramadan-coding-nights)")
+
+    
