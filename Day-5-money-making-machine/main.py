@@ -3,7 +3,7 @@ import random
 import time  
 import requests  
 
-st.title("Money Making Machine by saduq")
+st.title("Money Making Machine by sadiq")
 
 
 def generate_money():
