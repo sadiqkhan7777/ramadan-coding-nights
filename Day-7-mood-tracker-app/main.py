@@ -65,8 +65,7 @@ if not data.empty:
 
     # Display bar chart of mood frequencies
     st.bar_chart(mood_counts)
-
-    # Build with love by Sadiq Khan
+# Build with love by Sadiq Khan
     st.write("Build with ❤️ by [Sadiq Khan](https://github.com/sadiqkhan7777/ramadan-coding-nights)")
 
     
