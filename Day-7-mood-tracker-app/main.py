@@ -8,9 +8,16 @@ MOOD_FILE = "mood_log.csv"
 
 # Function to load mood data
 def load_mood_data():
+    # Check if the file exists
     if not os.path.exists(MOOD_FILE):
+        # If no file, create empty DataFrame with columns
         return pd.DataFrame(columns=["Date", "Mood"])
-    return pd.read_csv(MOOD_FILE)
+    
+    try:
+        return pd.read_csv(MOOD_FILE, on_bad_lines="skip")  # Corrected version
+    except pd.errors.ParserError:
+        st.error("Error reading CSV file! Please check its format.")
+        return pd.DataFrame(columns=["Date", "Mood"])  # Return empty DataFrame
 
 # Function to save mood data
 def save_mood_data(date, mood):
@@ -54,16 +61,7 @@ if not data.empty:
 
     # Bar Chart for Mood Distribution
     st.bar_chart(mood_counts)
+# Build with love by Sadiq Khan
+    st.write("Build with ❤️ by [Sadiq Khan](https://github.com/sadiqkhan7777/ramadan-coding-nights)")
 
-    # Line Chart for Mood Trends
-    mood_trends = data.groupby("Date")["Mood"].count()
-    st.line_chart(mood_trends)
-
-    # Display Data Summary
-    with st.expander("📜 Mood Log Data"):
-        st.dataframe(data)
-
-    # Show Most Frequent Mood
-    most_common_mood = mood_counts.idxmax()
-    st.info(f"💡 Most Frequent Mood: **{most_common_mood}**")
-
+    
