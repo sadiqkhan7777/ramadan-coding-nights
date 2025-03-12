@@ -23,8 +23,8 @@ def save_mood_data(date, mood):
 
         # Create CSV writer
         writer = csv.writer(file)
-
-        # Add new mood entry
+        
+        # 
         writer.writerow([date, mood])
 
 # Streamlit app title
