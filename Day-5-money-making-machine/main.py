@@ -20,7 +20,7 @@ if st.button("Generate Money"):
 
 def fetch_side_hustle():
     try:
-        response = requests.get("http://127.0.0.1:8000/side_hustles")
+        response = requests.get("https://fast-api-python.vercel.app/side_hustles")
         if response.status_code == 200: 
             hustles = response.json()  
             return hustles["side_hustle"] 
