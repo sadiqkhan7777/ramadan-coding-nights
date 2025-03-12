@@ -1,7 +1,7 @@
 import streamlit as st # For creating web interface
 import pandas as pd # For data manipulation
 import datetime # For handling dates
-import csv # For reading and writing CSV file 
+import csv # For reading and writing CSV file
 import os # For file operations
 
 # Define the file name for storing mood data
@@ -9,12 +9,14 @@ MOOD_FILE = "mood_log.csv"
 
 # Function to read mood data from the CSV file
 def load_mood_data():
-    # Check if the file exists
     if not os.path.exists(MOOD_FILE):
-        # If no file, create empty DataFrame with columns
         return pd.DataFrame(columns=["Date", "Mood"])
-    # Read and return existing mood data
-    return pd.read_csv(MOOD_FILE)
+    
+    try:
+        return pd.read_csv(MOOD_FILE, on_bad_lines="skip")  # Corrected version
+    except pd.errors.ParserError:
+        st.error("Error reading CSV file! Please check its format.")
+        return pd.DataFrame(columns=["Date", "Mood"])  # Return empty DataFrame
 
 # Function to add new mood entry to CSV file
 def save_mood_data(date, mood):
@@ -23,12 +25,12 @@ def save_mood_data(date, mood):
 
         # Create CSV writer
         writer = csv.writer(file)
-        
-        # 
+
+        # Add new mood entry
         writer.writerow([date, mood])
 
 # Streamlit app title
-st.title("Mood Tracker by Sadiq")
+st.title("Mood Tracker")
 
 # Get today's date
 today = datetime.date.today()
