@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import random
 
-app = FastAPI()
+app = FastAPI() 
 
 side_hustles = [
     "Freelancing - Start offering your skills online!",
