@@ -7,7 +7,7 @@ import os # For file operations
 # Define the file name for storing mood data
 MOOD_FILE = "mood_log.csv"
 
-Function to read mood data from the CSV file
+# Function to read mood data from the CSV file
 def load_mood_data():
     if not os.path.exists(MOOD_FILE):
         return pd.DataFrame(columns=["Date", "Mood"])
