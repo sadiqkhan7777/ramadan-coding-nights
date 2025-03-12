@@ -39,7 +39,7 @@ if st.button("Generate Hustle"):
 
 def fetch_money_quote():
     try:
-        response = requests.get("http://127.0.0.1:8000/money_quotes")
+        response = requests.get("https://fast-api-python.vercel.app/money_quotes")
         if response.status_code == 200: 
             quotes = response.json()  
             return quotes["money_quote"]  
