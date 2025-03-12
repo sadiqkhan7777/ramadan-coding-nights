@@ -28,7 +28,7 @@ def save_mood_data(date, mood):
         writer.writerow([date, mood])
 
 # Streamlit app title
-st.title("Mood Tracker")
+st.title("Mood Tracker by Sadiq")
 
 # Get today's date
 today = datetime.date.today()
