@@ -1,72 +1,69 @@
-import streamlit as st # For creating web interface
-import pandas as pd # For data manipulation
-import datetime # For handling dates
-import csv # For reading and writing CSV file
-import os # For file operations
+import streamlit as st
+import pandas as pd
+import datetime
+import csv
+import os
 
-# Define the file name for storing mood data
 MOOD_FILE = "mood_log.csv"
 
-# Function to read mood data from the CSV file
+# Function to load mood data
 def load_mood_data():
-    # Check if the file exists
     if not os.path.exists(MOOD_FILE):
-        # If no file, create empty DataFrame with columns
         return pd.DataFrame(columns=["Date", "Mood"])
-    # Read and return existing mood data
     return pd.read_csv(MOOD_FILE)
 
-# Function to add new mood entry to CSV file
+# Function to save mood data
 def save_mood_data(date, mood):
-    # Open file in append mode
-    with open(MOOD_FILE, "a") as file:
-
-        # Create CSV writer
+    with open(MOOD_FILE, "a", newline="") as file:
         writer = csv.writer(file)
+        writer.writerow([str(date), mood])  # Convert date to string and save
 
-        # Add new mood entry
-        writer.writerow([date, mood])
+# UI Enhancements
+st.set_page_config(page_title="Mood Tracker", page_icon="😊", layout="centered")
 
-# Streamlit app title
-st.title("Mood Tracker")
+st.title("😊 Mood Tracker")
 
-# Get today's date
 today = datetime.date.today()
 
-# Create subheader for mood input
-st.subheader("How are your feeling today?")
+st.subheader("🌟 How are you feeling today?")
 
-# Create dropdown for mood selection
-mood = st.selectbox("Select your mood", ["Happy", "Sad", "Angry", "Neutral"])
+# Improved Mood Selection with Emojis
+mood_options = {
+    "😊 Happy": "Happy",
+    "😢 Sad": "Sad",
+    "😡 Angry": "Angry",
+    "😐 Neutral": "Neutral",
+}
+mood = st.selectbox("Select your mood", list(mood_options.keys()))
 
-# Create button to save mood
-if st.button("Log Mood"):
-    
-    # Save mood when button is clicked
-    save_mood_data(today, mood)
+if st.button("Log Mood", use_container_width=True):
+    save_mood_data(today, mood_options[mood])
+    st.success("✅ Mood Logged Successfully!")
 
-    # Show success message
-    st.success("Mood Logged Successfully!")
-
-# Load existing mood data
+# Load Data
 data = load_mood_data()
 
-# If there is data to display
 if not data.empty:
+    st.subheader("📊 Mood Trends Over Time")
 
-    # Create section for Visualization
-    st.subheader("Mood Trends Over Time")
-
-    # Convert date stings to datetime Objects
+    # Convert Date column to datetime
     data["Date"] = pd.to_datetime(data["Date"])
 
-    # Count frequency of each mood
-    mood_counts = data.groupby("Mood").count()["Date"]
+    # Count occurrences of each mood
+    mood_counts = data["Mood"].value_counts()
 
-    # Display bar chart of mood frequencies
+    # Bar Chart for Mood Distribution
     st.bar_chart(mood_counts)
 
-    # Build with love by Asharib Ali
-    st.write("Build with ❤️ by [Asharib Ali](https://github.com/AsharibAli)")
+    # Line Chart for Mood Trends
+    mood_trends = data.groupby("Date")["Mood"].count()
+    st.line_chart(mood_trends)
 
-    
+    # Display Data Summary
+    with st.expander("📜 Mood Log Data"):
+        st.dataframe(data)
+
+    # Show Most Frequent Mood
+    most_common_mood = mood_counts.idxmax()
+    st.info(f"💡 Most Frequent Mood: **{most_common_mood}**")
+
