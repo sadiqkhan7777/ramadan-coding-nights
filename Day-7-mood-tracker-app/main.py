@@ -8,15 +8,29 @@ import os # For file operations
 MOOD_FILE = "mood_log.csv"
 
 # Function to read mood data from the CSV file
+# def load_mood_data():
+#     if not os.path.exists(MOOD_FILE):
+#         return pd.DataFrame(columns=["Date", "Mood"])
+    
+#     try:
+#         return pd.read_csv(MOOD_FILE, on_bad_lines="skip")  # Corrected version
+#     except pd.errors.ParserError:
+#         st.error("Error reading CSV file! Please check its format.")
+#         return pd.DataFrame(columns=["Date", "Mood"])  # Return empty DataFrame
+
 def load_mood_data():
     if not os.path.exists(MOOD_FILE):
         return pd.DataFrame(columns=["Date", "Mood"])
     
     try:
-        return pd.read_csv(MOOD_FILE, on_bad_lines="skip")  # Corrected version
+        df = pd.read_csv(MOOD_FILE, on_bad_lines="skip")  
+        st.write("CSV Data Preview:")
+        st.write(df.head())  # Debugging: Show first few rows
+        st.write("Columns in CSV:", df.columns.tolist())  # Show column names
+        return df
     except pd.errors.ParserError:
         st.error("Error reading CSV file! Please check its format.")
-        return pd.DataFrame(columns=["Date", "Mood"])  # Return empty DataFrame
+        return pd.DataFrame(columns=["Date", "Mood"])  
 
 # Function to add new mood entry to CSV file
 def save_mood_data(date, mood):
