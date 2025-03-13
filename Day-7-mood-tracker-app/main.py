@@ -68,6 +68,6 @@ if not data.empty:
     st.bar_chart(mood_counts)
 
     # Build with love by Asharib Ali
-    st.write("Build with ❤️ by [Asharib Ali](https://github.com/sadiqkhan7777)")
+    st.write("Build with ❤️ by [Sadiq khan](https://github.com/sadiqkhan7777)")
 
     
