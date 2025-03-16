@@ -3,7 +3,7 @@ import random
 
 app = FastAPI()
 
-# List of Pakistani jokes
+# List of Pakistani jokes in Roman Urdu
 jokes = [
     "Pathan: Doctor sahab, jab mein sota hoon toh aankhein band ho jati hain! Doctor: Bhai shukar mana! Agar khuli rehti toh bhoot lagta!",
     "Munna: Ammi mujhe chocolate chahiye! Ammi: Beta, dua maango. Munna: Ya Allah, Ammi ko samajh ajaye!",
